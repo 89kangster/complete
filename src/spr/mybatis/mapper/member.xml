@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="join">
+
+	<insert id="addmember" parameterType="spr.mybatis.vo.MemberVO">
+	insert into members(name,id,pwd,phone,address,email,member_date,status)
+
+	values(#{name},#{id},#{pwd},#{phone},#{address},#{email},#{member_date},#{status})
+
+	</insert>
+
+	<select id="zipcode" parameterType="String" resultType="spr.mybatis.vo.zipcodeVO">
+<!-- 		select * from zipcode where dong like '%'|| #{dong} ||'%' -->
+		select * from zipcode where dong=#{dong}
+
+	</select>
+
+	<select id="login" parameterType="java.util.Map" resultType="spr.mybatis.vo.MemberVO">
+		select * from members where id=#{id} and pwd=#{pwd}
+
+
+	</select>
+	
+	<select id="idchk" parameterType="String" resultType="spr.mybatis.vo.MemberVO">
+		select id from members where id=#{id}
+
+
+	</select>
+	
+	<select id="find" parameterType="java.util.Map" resultType="spr.mybatis.vo.MemberVO">
+	
+		select * from members where name=#{name} and email=#{email}
+
+
+	</select>
+	
+	<select id="mailchk" parameterType="String" resultType="spr.mybatis.vo.MemberVO">
+	
+		select * from members where email=#{email}
+
+
+	</select>
+	
+</mapper>  
+
+
+
+
+
+

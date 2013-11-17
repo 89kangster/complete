@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<select id="list" parameterType="java.util.Map" resultType="spr.mybatis.vo.BoardVO">
+		select * from board where status=#{c} order by seq desc limit
+		#{a},#{b}
+
+	</select>
+
+	<select id="total" parameterType="int" resultType="spr.mybatis.vo.BoardVO">
+		select * from
+		board where status=#{s}
+	</select>
+
+	<select id="view" parameterType="int" resultType="spr.mybatis.vo.BoardVO">
+		select * from board where seq=#{seq}
+	</select>
+	
+	<update id="hit" parameterType="java.util.Map">
+		update board set hit=#{hit} where seq=#{seq}
+	</update>
+	
+	<select id="orihit" parameterType="int" resultType="int">
+		select hit from board where seq=#{seq}
+	</select>
+
+	
+
+	<insert id="write" parameterType="spr.mybatis.vo.BoardVO">
+insert into board(writer,title,content,pwd,hit,groups,step,lev,bname,
+regdate,ip,status,uploadFilenameFileName,path)
+		values(#{writer},#{title},#{content},#{pwd},#{hit},#{groups},#{step},#{lev},#{bname},
+#{regdate},#{ip},#{status},#{uploadFilenameFileName},#{path})
+
+	</insert>
+	
+	<update id="del" parameterType="java.util.Map">
+	
+	update board set status=#{b} where status=#{a} and seq=#{c}
+	</update>
+	
+	<!-- 원글 수정하는 sql 문 -->
+	<update id="edit" parameterType="spr.mybatis.vo.BoardVO">
+		UPDATE board set title=#{title}, content=#{content},regdate=#{regdate},ip=#{ip},uploadFilenameFileName=#{uploadFilenameFileName}
+		where seq=#{seq} and pwd=#{pwd}
+	</update>
+	
+	<select id="count" resultType="int">
+		select count(*) from board
+	</select>
+	
+<!-- 	<select id="searchtitle" parameterType="java.util.Map" resultType="spr.mybatis.vo.BoardVO"> -->
+		
+	
+	
+<!-- 	</select> -->
+
+
+	<select id="searchname" parameterType="spr.mybatis.vo.spagingwriter" resultType="spr.mybatis.vo.BoardVO">
+		select * from board where writer like CONCAT('%',#{writer},'%') order by seq desc 
+		limit #{begin},#{numPerPage}
+	</select>
+	
+	<select id="searchnamecount" parameterType="String" resultType="int">
+		select count(*) from board where writer like CONCAT('%',#{writer},'%')
+		
+	</select>
+	
+	
+	<select id="searchtitle" parameterType="spr.mybatis.vo.spagingtitle" resultType="spr.mybatis.vo.BoardVO">
+		select * from board where title like CONCAT('%',#{title},'%') order by seq desc 
+limit #{begin},#{numPerPage}
+	</select>
+	
+	<select id="searchtitlecount" parameterType="String" resultType="int">
+		select count(*) from board where title like CONCAT('%',#{title},'%')
+		
+	</select>
+
+</mapper>  

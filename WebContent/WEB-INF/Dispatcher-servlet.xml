@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config/>
+	
+	
+	<!-- 
+		스프링환경에서 fileUpload시 반드시 선언해야 하는 빈객체
+		id가 무조건 multipartResolver이어야 한다.
+	 -->
+	 <bean id="multipartResolver"
+	  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	 	<property name="defaultEncoding" value="utf-8"/>
+	 	<property name="maxUploadSize" value="-1"/> 
+	 </bean>
+	
+	<!-- 내가 폴더안에 jsp파일을 집어넣었는데 에러가 났었다 그런데 여기서 bean name을 수정하니깐 됬다 외우자 -->
+	
+	<!-- 각 컨트롤러 선언  회원가입을 처리하는 빈객체들-->
+	<bean name="/members/add.inc" class="spr.controller.Control">
+		<property name="dao" ref="dao"/>	
+	</bean>
+	
+	<bean name="/members/zipcode.inc" class="spr.controller.dbControl">
+		<property name="dao" ref="dao"/>	
+	</bean>
+	
+	<bean name="/members/login.inc" class="spr.controller.LogControl">
+		<property name="dao" ref="dao"/>	
+	</bean>
+	
+	<bean name="/members/check.inc" class="spr.controller.ChkControl">
+		<property name="dao" ref="dao"/>	
+	</bean>
+	
+	<bean name="/members/find.inc" class="spr.controller.FindControl">
+		<property name="dao" ref="dao"/>	
+	</bean>
+	
+	<bean name="/members/mailchk.inc" class="spr.controller.MailControl">
+		<property name="dao" ref="dao"/>	
+	</bean>
+	
+	
+	<!-- 스프링 bbs를 위한 bean -->
+	
+	<bean name="/bbs/list.inc" class="spr.controller.ListControl">
+		<property name="bdao" ref="bdao"/>	
+		<property name="rdao" ref="rdao"/>	
+	</bean>
+	
+	<bean name="/bbs/view.inc" class="spr.controller.ViewControl">
+		<property name="bdao" ref="bdao"/>	
+			<property name="rdao" ref="rdao"/>	
+	</bean>
+	
+	
+	<bean name="/bbs/modify.inc" class="spr.controller.ModifyControl">
+		<property name="bdao" ref="bdao"/>	
+	</bean>
+	
+	<bean name="/bbs/write.inc" class="spr.controller.WriteControl">
+		
+	</bean>
+	
+	<bean id="/bbs/insert.inc" class="spr.controller.InsertControl">
+		<property name="uploadPath" value="uploadFilename"/>
+		
+	</bean>
+	
+	<bean id="/bbs/del.inc" class="spr.controller.DelControl">
+		<property name="bdao" ref="bdao"/>
+	</bean>
+	
+	<bean id="/bbs/edit.inc" class="spr.controller.EditControl">
+		<property name="uploadPath" value="uploadFilename"/>
+	</bean>
+	
+	
+	<bean name="/bbs/getsearch.inc" class="spr.controller.SearchControl">
+		<property name="bdao" ref="bdao"/>	
+	</bean>
+	
+	
+	<bean name="/bbs/changereply.inc" class="spr.controller.ChangeRepControl">
+		
+	</bean>
+	
+	<bean name="/bbs/repinsert.inc" class="spr.controller.RepInsert">
+		<property name="rdao" ref="rdao"/>	
+	</bean>
+	
+	<bean name="/bbs/miniboard.inc" class="spr.controller.MiniBoardControl">
+		<property name="bdao" ref="bdao"/>	
+		<property name="rdao" ref="rdao"/>	
+	</bean>
+	
+	
+	<!-- admin페이지로써, 관리자가 상품이미지와 그에 대한 설명을 직접 작성하여 올리면,
+		view단에서 db에 들어있는 경로와, 상품설명에 대한 글을가져오도록 한다.
+	 -->
+<!-- 	 <bean name="/admin/goodsup.inc" class="spr.controller.GoodsUpControl"> -->
+		
+<!-- 	</bean> -->
+	
+
+	
+	
+	
+	<!-- View Resolver선언 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	
+	
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

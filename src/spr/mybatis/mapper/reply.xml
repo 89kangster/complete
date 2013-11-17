@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rep">
+
+
+	<select id="all" resultType="spr.mybatis.vo.ReplyVO">
+		select * from reply
+	</select>
+	
+	<insert id="write" parameterType="spr.mybatis.vo.ReplyVO">
+	insert into reply(seq,writer,content,pwd,ip,status,title)
+	values(#{seq},#{writer},#{content},#{pwd},#{ip},#{status},#{title})
+	
+	</insert>
+		
+<select id="view" parameterType="int" resultType="spr.mybatis.vo.ReplyVO">
+		select * from reply where seq=#{seq}
+	</select>
+
+</mapper>
